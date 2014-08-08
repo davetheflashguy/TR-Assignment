@@ -1,0 +1,96 @@
+<!doctype html>
+<html ng-app="trApp">
+
+<head>
+     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
+     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+     <script src="controller.js"></script>
+     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body ng-controller="userFormController">
+     <div class="container">
+          <div class="row">
+               <div class="col-md-6">
+               <tabset>
+                    <tab heading="Step 1" active="isFirstActive">
+                         <div class="row">
+                              <div class="col-md-6">
+                                   <form name="userFormStep1" >
+                                        <div class="form-group">
+                                             <label class="control-label">First Name</label>
+                                             <input type="text" class="form-control" name="firstname" ng-model="user.firstname" required placeholder="First Name" />
+                                        </div>
+                                        <div class="form-group">
+                                             <label class="control-label">Last Name</label>
+                                             <input type="text" class="form-control" name="lastname" ng-model="user.lastname" required placeholder="Last Name" />
+                                        </div>
+                                        <div class="form-group">
+                                             <label class="control-label">Email</label>
+                                             <input type="text" class="form-control" name="email" ng-model="user.email" required placeholder="Email" />
+                                        </div>
+                                        <div class="form-group">
+                                             <label class="control-label">Phone</label>
+                                             <input type="text" class="form-control" name="phone" ng-model="user.phone" required placeholder="Phone" />
+                                        </div>
+                                        <button class="btn btn-primary" ng-disabled="userFormStep1.$invalid" ng-click="selectSecondTab();">Next</button>
+                                   </form>
+                              </div>
+                         </div>
+                    </tab>
+                    <tab heading="Step 2" active="isSecondActive" disabled="userFormStep1.$invalid" ng-disabled="userFormStep1.$invalid">
+                         <form name="userFormStep2">
+                              <div class="row">
+                              <div class="col-md-6">
+                                   <div class="form-group">
+                                        <label for="location">Location</label>
+                                         <select class="form-control" required name="leavingFrom" ng-model="leavingFrom"
+                                              ng-options="region.code as region.name for region in regions">
+                                          </select>
+                                          </div>
+                                          </div>
+                                   </div>
+                                   <div class="form-group">
+                                        <div class="row">
+                                             <div class="col-md-6">
+                                                  <label>Date Depart</label>
+                                                  <p class="input-group">
+                                                       <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="departingDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                                       <span class="input-group-btn">
+                                                            <button type="button" ng-disabled="userFormStep2.$invalid" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                       </span>
+                                                  </p>
+                                             </div>
+                                        </div>
+                                   </div>
+                                   <div class="form-group">
+                                        <div class="row">
+                                             <div class="col-md-6">
+                                                  <label>Date Return</label>
+                                                  <p class="input-group">
+                                                       <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="returningDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                                       <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                       </span>
+                                                  </p>
+                                             </div>
+                                        </div>
+                                   </div>
+                                   <button class="btn btn-primary" ng-click="selectThirdTab();">Next</button>
+                              </form>
+                         </tab>
+                         <tab heading="Step 3" disabled="userFormStep1.$invalid" active="isThirdActive">
+                              <div class="row">
+                                   <div class="col-md-6">
+                                        <span><a href="mailto:{{user.email}}">{{user.firstname}} {{user.lastname}}</a> ({{user.phone}}) will depart for {{leavingFrom}} on <span ng-bind="departingDate | date:'MM/dd/yyyy'"></span> and return on <span ng-bind="returningDate | date:'MM/dd/yyyy'"></span>.</span>
+                                   </div>
+                              </div>
+                         </tab>
+                    </tabset>
+               </div>
+          </div>
+     </div>
+     
+</body>
+
+</html>
